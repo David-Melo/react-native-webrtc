@@ -196,6 +196,22 @@ export default class RTCPeerConnection extends defineCustomEventTarget(...PEER_C
         return this._remoteStreams.slice();
     }
 
+    muteLocalStreams(): void {
+        this._localStreams.forEach(stream=>{
+            stream._tracks.forEach(tracks=>{
+                tracks.enabled = false
+            })
+        })
+    }
+
+    unMuteLocalStreams(): void {
+        this._localStreams.forEach(stream=>{
+            stream._tracks.forEach(tracks=>{
+                tracks.enabled = true
+            })
+        })
+    }
+
     close(): void {
         WebRTCModule.peerConnectionClose(this._peerConnectionId);
     }
